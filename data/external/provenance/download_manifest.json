@@ -1,0 +1,26 @@
+{
+  "fetched_at_utc": "2026-11-13T10:07:21.228945+00:00",
+  "items": [
+    {
+      "url": "https://raw.githubusercontent.com/strontic/xcyclopedia/master/output/strontic-xcyclopedia.json.zip",
+      "path": "D:\\LotLDetectionV2\\data\\reference\\raw\\xcyclopedia.json.zip",
+      "bytes": 8357610,
+      "sha256": "6fb323a5d27637048e52e58102e98415705ef30611e6e81639d9266b44ed9a46",
+      "status": "downloaded_or_cached"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MISP/misp-warninglists/main/lists/lots-project/list.json",
+      "path": "D:\\LotLDetectionV2\\data\\reference\\raw\\lots-project.json",
+      "bytes": 4135,
+      "sha256": "5d971ae9eab86f0d9823c7754a321251144b725fdd637f5ef31a11999b9be335",
+      "status": "downloaded_or_cached"
+    },
+    {
+      "status": "references_built",
+      "documented_binaries": 2329,
+      "hash_metadata": 10137,
+      "lots_domains": 175
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,5 @@
+{
+  "source": "Nisslmueller (2022), Appendix B, printed page 65; adapted from https://filesec.io/",
+  "note": "Historical thesis snapshot. Executable/script extensions are excluded at F10 extraction time because F8/F9 already cover them.",
+  "extensions": [".a3x", ".application", ".appref-ms", ".arj", ".asd", ".bat", ".bgi", ".bz2", ".chm", ".cmd", ".cpl", ".cs", ".daa", ".desktopthemepackfile", ".diagcab", ".docm", ".dotm", ".gadget", ".gz", ".hta", ".hwpx", ".img", ".iqy", ".jar", ".jnlp", ".library-ms", ".lnk", ".mam", ".mht", ".mhtml", ".msc", ".msrcincident", ".ocx", ".ppam", ".ppsm", ".pptm", ".ps1", ".pif", ".potm", ".rar", ".reg", ".scf", ".scr", ".sct", ".searchconnector-ms", ".settingcontent-ms", ".sldm", ".slk", ".tar", ".theme", ".themepack", ".url", ".vb", ".vbe", ".vbs", ".website", ".ws", ".wsf", ".wsh", ".xlam", ".xll", ".xlm", ".xlsm", ".xltm", ".xsl", ".xz", ".z", ".zip"]
+}

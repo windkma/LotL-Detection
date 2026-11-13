@@ -1,0 +1,40 @@
+{
+  "ready": false,
+  "original_manual_labels_available": false,
+  "total_real_process_pairs": 11699,
+  "verified_background_pairs": 0,
+  "minimum_required": 2,
+  "benchmarks": {
+    "botsv1": {
+      "required_malicious": 16,
+      "required_benign": 84,
+      "ready": false
+    },
+    "botsv2": {
+      "required_malicious": 8,
+      "required_benign": 16,
+      "ready": false
+    },
+    "botsv3": {
+      "required_malicious": 25,
+      "required_benign": 50,
+      "ready": false
+    },
+    "splunk_attack_data": {
+      "required_malicious": 100,
+      "required_benign": 75,
+      "ready": false
+    },
+    "mitre_eval": {
+      "required_malicious": 100,
+      "required_benign": 200,
+      "ready": false
+    }
+  },
+  "blocking_inputs": [
+    "Original manually labeled thesis records or independently reviewed source-linked annotations for the 5 benchmarks"
+  ],
+  "training_ready": true,
+  "eligible_training_pairs": 1273,
+  "training_policy": "available_real_data"
+}

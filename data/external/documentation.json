@@ -1,0 +1,26 @@
+{
+  "cmd.exe": {
+    "source": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd",
+    "arguments": ["/c", "/k", "/s", "/q", "/d", "/a", "/u", "/t", "/e", "/f", "/v", "/?"]
+  },
+  "regsvr32.exe": {
+    "source": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/regsvr32",
+    "arguments": ["/u", "/s", "/n", "/i", "/?"]
+  },
+  "certutil.exe": {
+    "source": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/certutil",
+    "arguments": ["-urlcache", "-split", "-f", "-encode", "-decode", "-decodehex", "-hashfile", "-dump", "-verify", "-verifyctl", "-store", "-addstore", "-delstore", "-exportpfx", "-importpfx", "-user", "-silent", "-v", "-?"]
+  },
+  "powershell.exe": {
+    "source": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_exe",
+    "arguments": ["-command", "-c", "-encodedcommand", "-enc", "-e", "-file", "-f", "-noprofile", "-nop", "-noninteractive", "-noni", "-windowstyle", "-w", "-executionpolicy", "-ep", "-inputformat", "-outputformat", "-version", "-sta", "-mta", "-noexit", "-nologo", "-configurationname", "-help", "-?"]
+  },
+  "bitsadmin.exe": {
+    "source": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/bitsadmin",
+    "arguments": ["/transfer", "/create", "/addfile", "/resume", "/complete", "/cancel", "/list", "/info", "/download", "/upload", "/priority", "/setnotifycmdline", "/?"]
+  },
+  "whoami.exe": {
+    "source": "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/whoami",
+    "arguments": ["/upn", "/fqdn", "/logonid", "/user", "/groups", "/priv", "/all", "/fo", "/nh", "/?"]
+  }
+}

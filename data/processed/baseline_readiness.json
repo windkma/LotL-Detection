@@ -1,0 +1,14 @@
+{
+  "input_pairs": 11699,
+  "eligible_training": 1273,
+  "with_background_evidence": 0,
+  "missing_background_evidence": 11699,
+  "excluded_signature": 10402,
+  "missing_identity": 0,
+  "heldout": 0,
+  "duplicate": 24,
+  "training_policy": "available_real_data",
+  "minimum_required": 2,
+  "clean_background_verified": false,
+  "ready": true
+}

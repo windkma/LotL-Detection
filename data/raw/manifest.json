@@ -1,0 +1,221 @@
+{
+  "revisions": {
+    "OTRF/Security-Datasets": "d9d40ef123d2c87d5d3df28c96bcab4f0faccc87",
+    "OTRF/detection-hackathon-apt29": "b5989e17465753f46433e77f795f651453c01279",
+    "Yamato-Security/hayabusa-sample-evtx": "0845333ecb4afcf64c55c6e10946383f168f308c",
+    "splunk/attack_data": "8394b8d6ced41ce1d20348b65a1dd6067eb739fc"
+  },
+  "items": [
+    {
+      "repo": "OTRF/Security-Datasets",
+      "path": "data/raw/otrf_security_datasets/08a9de2270_psh_lsass_memory_dump_comsvcs.zip",
+      "url": "https://raw.githubusercontent.com/OTRF/Security-Datasets/d9d40ef123d2c87d5d3df28c96bcab4f0faccc87/datasets/atomic/windows/credential_access/host/psh_lsass_memory_dump_comsvcs.zip",
+      "sha256": "0af9e920220d746432f0972be83ad057629695540aecd68c15869d190786e1ae",
+      "bytes": 17957,
+      "source_path": "datasets/atomic/windows/credential_access/host/psh_lsass_memory_dump_comsvcs.zip"
+    },
+    {
+      "repo": "OTRF/Security-Datasets",
+      "path": "data/raw/otrf_security_datasets/eca941d481_cmd_bitsadmin_download_psh_script.zip",
+      "url": "https://raw.githubusercontent.com/OTRF/Security-Datasets/d9d40ef123d2c87d5d3df28c96bcab4f0faccc87/datasets/atomic/windows/defense_evasion/host/cmd_bitsadmin_download_psh_script.zip",
+      "sha256": "8fb7bc9f3d82f672dc39a55e50006137aa540c4a9860acdcc5d08a4fd609b594",
+      "bytes": 51563,
+      "source_path": "datasets/atomic/windows/defense_evasion/host/cmd_bitsadmin_download_psh_script.zip"
+    },
+    {
+      "repo": "OTRF/Security-Datasets",
+      "path": "data/raw/otrf_security_datasets/99b2210e58_cmd_mshta_vbscript_execute_psh.zip",
+      "url": "https://raw.githubusercontent.com/OTRF/Security-Datasets/d9d40ef123d2c87d5d3df28c96bcab4f0faccc87/datasets/atomic/windows/defense_evasion/host/cmd_mshta_vbscript_execute_psh.zip",
+      "sha256": "f5f700bc986bbe73edcc209754b28a3e0ad38c56877f7fc5ed6fd04bc036d9f4",
+      "bytes": 88544,
+      "source_path": "datasets/atomic/windows/defense_evasion/host/cmd_mshta_vbscript_execute_psh.zip"
+    },
+    {
+      "repo": "OTRF/Security-Datasets",
+      "path": "data/raw/otrf_security_datasets/ff4cfc847a_cmd_mshta_javascript_getobject_sct.zip",
+      "url": "https://raw.githubusercontent.com/OTRF/Security-Datasets/d9d40ef123d2c87d5d3df28c96bcab4f0faccc87/datasets/atomic/windows/defense_evasion/host/cmd_mshta_javascript_getobject_sct.zip",
+      "sha256": "976a705690dcc296ba132b9cd594c004265911e9e40d402c879dd06eddbbc057",
+      "bytes": 125926,
+      "source_path": "datasets/atomic/windows/defense_evasion/host/cmd_mshta_javascript_getobject_sct.zip"
+    },
+    {
+      "repo": "OTRF/Security-Datasets",
+      "path": "data/raw/otrf_security_datasets/55059dff62_covenant_installutil.zip",
+      "url": "https://raw.githubusercontent.com/OTRF/Security-Datasets/d9d40ef123d2c87d5d3df28c96bcab4f0faccc87/datasets/atomic/windows/defense_evasion/host/covenant_installutil.zip",
+      "sha256": "9be5698bd46e2869b34d0a6ef712725d1e611eb32d87d2d29f37c9e34872fabe",
+      "bytes": 111142,
+      "source_path": "datasets/atomic/windows/defense_evasion/host/covenant_installutil.zip"
+    },
+    {
+      "repo": "OTRF/Security-Datasets",
+      "path": "data/raw/otrf_security_datasets/b80772bfa0_covenant_lolbin_wuauclt_createremotethread.zip",
+      "url": "https://raw.githubusercontent.com/OTRF/Security-Datasets/d9d40ef123d2c87d5d3df28c96bcab4f0faccc87/datasets/atomic/windows/defense_evasion/host/covenant_lolbin_wuauclt_createremotethread.zip",
+      "sha256": "56b6695152f4de18ed23afbbcab2402b03c1ffbbf7c5fd5f6f4e80ec621843ac",
+      "bytes": 137136,
+      "source_path": "datasets/atomic/windows/defense_evasion/host/covenant_lolbin_wuauclt_createremotethread.zip"
+    },
+    {
+      "repo": "OTRF/Security-Datasets",
+      "path": "data/raw/otrf_security_datasets/5f104b89e1_empire_launcher_sct_regsvr32.zip",
+      "url": "https://raw.githubusercontent.com/OTRF/Security-Datasets/d9d40ef123d2c87d5d3df28c96bcab4f0faccc87/datasets/atomic/windows/defense_evasion/host/empire_launcher_sct_regsvr32.zip",
+      "sha256": "abeb5c52c75286386e5eb999d7423d738a624191f4a95fb62694b471a10b2dab",
+      "bytes": 310095,
+      "source_path": "datasets/atomic/windows/defense_evasion/host/empire_launcher_sct_regsvr32.zip"
+    },
+    {
+      "repo": "OTRF/Security-Datasets",
+      "path": "data/raw/otrf_security_datasets/e3d08216ad_empire_wmic_add_user_backdoor.zip",
+      "url": "https://raw.githubusercontent.com/OTRF/Security-Datasets/d9d40ef123d2c87d5d3df28c96bcab4f0faccc87/datasets/atomic/windows/defense_evasion/host/empire_wmic_add_user_backdoor.zip",
+      "sha256": "4b18e693ed39cc75c429bc6f4b02400eda7dd01f336303e3edaf3cc3262bbac4",
+      "bytes": 1166833,
+      "source_path": "datasets/atomic/windows/defense_evasion/host/empire_wmic_add_user_backdoor.zip"
+    },
+    {
+      "repo": "OTRF/Security-Datasets",
+      "path": "data/raw/otrf_security_datasets/d51f630dc1_psh_mshta_html_application_execution.zip",
+      "url": "https://raw.githubusercontent.com/OTRF/Security-Datasets/d9d40ef123d2c87d5d3df28c96bcab4f0faccc87/datasets/atomic/windows/defense_evasion/host/psh_mshta_html_application_execution.zip",
+      "sha256": "f734cd8d2043da8f9f49d86bea7b5bf35a8c87445aa44975a107936a543ae840",
+      "bytes": 155028,
+      "source_path": "datasets/atomic/windows/defense_evasion/host/psh_mshta_html_application_execution.zip"
+    },
+    {
+      "repo": "OTRF/Security-Datasets",
+      "path": "data/raw/otrf_security_datasets/283d0eb2e1_wmic_remote_xsl_jscript.zip",
+      "url": "https://raw.githubusercontent.com/OTRF/Security-Datasets/d9d40ef123d2c87d5d3df28c96bcab4f0faccc87/datasets/atomic/windows/defense_evasion/host/wmic_remote_xsl_jscript.zip",
+      "sha256": "f5766221059189dafc8b826abeecd46708bb8e5b21a480ecad6aa0a37f382320",
+      "bytes": 132543,
+      "source_path": "datasets/atomic/windows/defense_evasion/host/wmic_remote_xsl_jscript.zip"
+    },
+    {
+      "repo": "OTRF/Security-Datasets",
+      "path": "data/raw/otrf_security_datasets/beb644d786_empire_msbuild_dcerpc_wmi_smb.zip",
+      "url": "https://raw.githubusercontent.com/OTRF/Security-Datasets/d9d40ef123d2c87d5d3df28c96bcab4f0faccc87/datasets/atomic/windows/lateral_movement/host/empire_msbuild_dcerpc_wmi_smb.zip",
+      "sha256": "edbc2fdd9e118da0999d7b941c78501cd4142e2afe9e794aed4349101fb59ca8",
+      "bytes": 653574,
+      "source_path": "datasets/atomic/windows/lateral_movement/host/empire_msbuild_dcerpc_wmi_smb.zip"
+    },
+    {
+      "repo": "OTRF/Security-Datasets",
+      "path": "data/raw/otrf_security_datasets/032cce1883_empire_wmic_add_user_backdoor.zip",
+      "url": "https://raw.githubusercontent.com/OTRF/Security-Datasets/d9d40ef123d2c87d5d3df28c96bcab4f0faccc87/datasets/atomic/windows/lateral_movement/host/empire_wmic_add_user_backdoor.zip",
+      "sha256": "88502d9a8d90f17aa638d7331120d52e7295480ea5fc4a156463399181d1c6e1",
+      "bytes": 1166833,
+      "source_path": "datasets/atomic/windows/lateral_movement/host/empire_wmic_add_user_backdoor.zip"
+    },
+    {
+      "repo": "Yamato-Security/hayabusa-sample-evtx",
+      "path": "data/raw/hayabusa_samples/cd684fef99_ID1-SYSMON driver unload (FilterManager).evtx",
+      "url": "https://raw.githubusercontent.com/Yamato-Security/hayabusa-sample-evtx/0845333ecb4afcf64c55c6e10946383f168f308c/EVTX-to-MITRE-Attack/TA0005-Defense%20Evasion/T1562.001-Impair%20Defenses-Disable%20or%20Modify%20tool/ID1-SYSMON%20driver%20unload%20%28FilterManager%29.evtx",
+      "sha256": "c78f416491c0442e435ff99b4c1abb0edb66f137218e623dfbb25ee5c487c817",
+      "bytes": 69632,
+      "source_path": "EVTX-to-MITRE-Attack/TA0005-Defense Evasion/T1562.001-Impair Defenses-Disable or Modify tool/ID1-SYSMON driver unload (FilterManager).evtx"
+    },
+    {
+      "repo": "Yamato-Security/hayabusa-sample-evtx",
+      "path": "data/raw/hayabusa_samples/4050f261ae_ID1-LSASS dump with LSASSY (SYSMON).evtx",
+      "url": "https://raw.githubusercontent.com/Yamato-Security/hayabusa-sample-evtx/0845333ecb4afcf64c55c6e10946383f168f308c/EVTX-to-MITRE-Attack/TA0006-Credential%20Access/T1003-Credential%20dumping/ID1-LSASS%20dump%20with%20LSASSY%20%28SYSMON%29.evtx",
+      "sha256": "29a1c8656a78c0172317b9d58e3c037dd9c5d8b823e2495140b7771cf1cc384b",
+      "bytes": 69632,
+      "source_path": "EVTX-to-MITRE-Attack/TA0006-Credential Access/T1003-Credential dumping/ID1-LSASS dump with LSASSY (SYSMON).evtx"
+    },
+    {
+      "repo": "Yamato-Security/hayabusa-sample-evtx",
+      "path": "data/raw/hayabusa_samples/29fe3d9283_ID1-SPN discovery (SYSMON process).evtx",
+      "url": "https://raw.githubusercontent.com/Yamato-Security/hayabusa-sample-evtx/0845333ecb4afcf64c55c6e10946383f168f308c/EVTX-to-MITRE-Attack/TA0007-Discovery/T1087-Account%20discovery/ID1-SPN%20discovery%20%28SYSMON%20process%29.evtx",
+      "sha256": "33df2cc4cd2c13b28c4d62f8e2f850c6808ef3e14c9901736097eef344444416",
+      "bytes": 69632,
+      "source_path": "EVTX-to-MITRE-Attack/TA0007-Discovery/T1087-Account discovery/ID1-SPN discovery (SYSMON process).evtx"
+    },
+    {
+      "repo": "Yamato-Security/hayabusa-sample-evtx",
+      "path": "data/raw/hayabusa_samples/ff488bf0a8_T1027.004_ObfuscatedFilesOrInformationCompileAfterDelivery_Sysmon.evtx",
+      "url": "https://raw.githubusercontent.com/Yamato-Security/hayabusa-sample-evtx/0845333ecb4afcf64c55c6e10946383f168f308c/YamatoSecurity/DefenseEvasion/T1027.004_ObfuscatedFilesOrInformationCompileAfterDelivery_Sysmon.evtx",
+      "sha256": "85c0bf97dbffafb9c9e45b58457d3c43af4a489b9c4a29b06fb74c30f87a0e80",
+      "bytes": 69632,
+      "source_path": "YamatoSecurity/DefenseEvasion/T1027.004_ObfuscatedFilesOrInformationCompileAfterDelivery_Sysmon.evtx"
+    },
+    {
+      "repo": "OTRF/detection-hackathon-apt29",
+      "path": "data/raw/mitre_attack_evals/bd061e993f_apt29_evals_day1_manual.zip",
+      "url": "https://raw.githubusercontent.com/OTRF/detection-hackathon-apt29/b5989e17465753f46433e77f795f651453c01279/datasets/day1/apt29_evals_day1_manual.zip",
+      "sha256": "a13885262a48c3d21f0a1ae61983194410743c0be474354210dd0158b3ec9cce",
+      "bytes": 13944972,
+      "source_path": "datasets/day1/apt29_evals_day1_manual.zip"
+    },
+    {
+      "repo": "Yamato-Security/hayabusa-sample-evtx",
+      "path": "data/raw/hayabusa_samples/cccb464b19_T1218.004_SignedBinaryProxyExecutionInstallUtil_Sysmon.evtx",
+      "url": "https://raw.githubusercontent.com/Yamato-Security/hayabusa-sample-evtx/0845333ecb4afcf64c55c6e10946383f168f308c/YamatoSecurity/DefenseEvasion/T1218.004_SignedBinaryProxyExecutionInstallUtil_Sysmon.evtx",
+      "sha256": "351027606b81e6a9c46b42a407af1bc0d38ff550dcdb3d6940c4c26a0e1d8725",
+      "bytes": 69632,
+      "source_path": "YamatoSecurity/DefenseEvasion/T1218.004_SignedBinaryProxyExecutionInstallUtil_Sysmon.evtx"
+    },
+    {
+      "repo": "Yamato-Security/hayabusa-sample-evtx",
+      "path": "data/raw/hayabusa_samples/1dbef34e40_T1210_Zerologon_Sysmon.evtx",
+      "url": "https://raw.githubusercontent.com/Yamato-Security/hayabusa-sample-evtx/0845333ecb4afcf64c55c6e10946383f168f308c/YamatoSecurity/LateralMovement/T1210_Zerologon_Sysmon.evtx",
+      "sha256": "f3c4396e84fbcbe69d27b33ebdcb03caa7967fe9e3508700241a903b086ec1d3",
+      "bytes": 69632,
+      "source_path": "YamatoSecurity/LateralMovement/T1210_Zerologon_Sysmon.evtx"
+    },
+    {
+      "repo": "Yamato-Security/hayabusa-sample-evtx",
+      "path": "data/raw/hayabusa_samples/c707f81408_Sysmon-27-BlockExeWrite_AbusingCertutil.evtx",
+      "url": "https://raw.githubusercontent.com/Yamato-Security/hayabusa-sample-evtx/0845333ecb4afcf64c55c6e10946383f168f308c/YamatoSecurity/Sysmon/Sysmon-27-BlockExeWrite_AbusingCertutil.evtx",
+      "sha256": "4a6e0c25cd24048e60682aa4fa0d0be629ccd55859429532557be121aedfb72f",
+      "bytes": 69632,
+      "source_path": "YamatoSecurity/Sysmon/Sysmon-27-BlockExeWrite_AbusingCertutil.evtx"
+    },
+    {
+      "repo": "Yamato-Security/hayabusa-sample-evtx",
+      "path": "data/raw/hayabusa_samples/18d2f7301f_Sysmon-27-BlockExeWrite_AbusingSvchost.evtx",
+      "url": "https://raw.githubusercontent.com/Yamato-Security/hayabusa-sample-evtx/0845333ecb4afcf64c55c6e10946383f168f308c/YamatoSecurity/Sysmon/Sysmon-27-BlockExeWrite_AbusingSvchost.evtx",
+      "sha256": "9d1c72bbd7540dac1f7f087d2a651487c08639c88a3674734ebb3192355451be",
+      "bytes": 69632,
+      "source_path": "YamatoSecurity/Sysmon/Sysmon-27-BlockExeWrite_AbusingSvchost.evtx"
+    },
+    {
+      "repo": "splunk/attack_data",
+      "path": "data/raw/splunk_attack_data/575d98996e_mshta_tasks_windows-sysmon.log",
+      "url": "https://media.githubusercontent.com/media/splunk/attack_data/8394b8d6ced41ce1d20348b65a1dd6067eb739fc/datasets/attack_techniques/T1218.005/atomic_red_team/mshta_tasks_windows-sysmon.log",
+      "sha256": "a8f64b9d6ebb3e5d46be1c3cff44a820edc1ce65df5fbf0e75da22d157cbe243",
+      "bytes": 1031,
+      "source_path": "datasets/attack_techniques/T1218.005/atomic_red_team/mshta_tasks_windows-sysmon.log"
+    },
+    {
+      "repo": "splunk/attack_data",
+      "path": "data/raw/splunk_attack_data/d813a2a67b_backupdb_certutil_windows-sysmon.log",
+      "url": "https://media.githubusercontent.com/media/splunk/attack_data/8394b8d6ced41ce1d20348b65a1dd6067eb739fc/datasets/attack_techniques/T1649/atomic_red_team/backupdb_certutil_windows-sysmon.log",
+      "sha256": "91e7f54ade428ec3c845774fe7ca2c8a7d9c479d2c8cb80bd50236c91ba4335c",
+      "bytes": 18355,
+      "source_path": "datasets/attack_techniques/T1649/atomic_red_team/backupdb_certutil_windows-sysmon.log"
+    },
+    {
+      "repo": "OTRF/detection-hackathon-apt29",
+      "path": "data/raw/mitre_attack_evals/4aec3d8289_apt29_evals_day2_manual.zip",
+      "url": "https://raw.githubusercontent.com/OTRF/detection-hackathon-apt29/b5989e17465753f46433e77f795f651453c01279/datasets/day2/apt29_evals_day2_manual.zip",
+      "sha256": "74104dc9542529d1428b4fd836748749e1dacbad29a4365e6d201381677f067e",
+      "bytes": 43033040,
+      "source_path": "datasets/day2/apt29_evals_day2_manual.zip"
+    },
+    {
+      "repo": "splunk/attack_data",
+      "path": "data/raw/splunk_attack_data/77dca62433_windows-sysmon.log",
+      "url": "https://media.githubusercontent.com/media/splunk/attack_data/8394b8d6ced41ce1d20348b65a1dd6067eb739fc/datasets/suspicious_behaviour/certutil_exe_certificate_extraction/windows-sysmon.log",
+      "sha256": "ff0fc71c4824ae7c6d5a9f3d48d1381bf7f76dc3acd87c2f6197da555cc2486d",
+      "bytes": 299547462,
+      "source_path": "datasets/suspicious_behaviour/certutil_exe_certificate_extraction/windows-sysmon.log"
+    },
+    {
+      "url": "https://s3.amazonaws.com/botsdataset/botsv1/json-by-sourcetype/botsv1.XmlWinEventLog-Microsoft-Windows-Sysmon-Operational.json.gz",
+      "path": "D:\\LotLDetectionV2\\data\\raw\\splunk_botsv1\\botsv1_sysmon.json.gz",
+      "bytes": 145011879,
+      "sha256": "6bccc720bbd7491e57b62a74a280cda274ce9e82c846b9891feb775be8a92c5b",
+      "status": "downloaded_or_cached",
+      "repo": "splunk/botsv1",
+      "source_path": "json-by-sourcetype/botsv1.XmlWinEventLog-Microsoft-Windows-Sysmon-Operational.json.gz",
+      "kind": "mixed_ctf_telemetry"
+    }
+  ],
+  "errors": []
+}

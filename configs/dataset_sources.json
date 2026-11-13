@@ -1,0 +1,152 @@
+[
+  {
+    "repo": "OTRF/Security-Datasets",
+    "branch": "master",
+    "path": "datasets/atomic/windows/credential_access/host/psh_lsass_memory_dump_comsvcs.zip",
+    "kind": "atomic_scenario"
+  },
+  {
+    "repo": "OTRF/Security-Datasets",
+    "branch": "master",
+    "path": "datasets/atomic/windows/defense_evasion/host/cmd_bitsadmin_download_psh_script.zip",
+    "kind": "atomic_scenario"
+  },
+  {
+    "repo": "OTRF/Security-Datasets",
+    "branch": "master",
+    "path": "datasets/atomic/windows/defense_evasion/host/cmd_mshta_javascript_getobject_sct.zip",
+    "kind": "atomic_scenario"
+  },
+  {
+    "repo": "OTRF/Security-Datasets",
+    "branch": "master",
+    "path": "datasets/atomic/windows/defense_evasion/host/cmd_mshta_vbscript_execute_psh.zip",
+    "kind": "atomic_scenario"
+  },
+  {
+    "repo": "OTRF/Security-Datasets",
+    "branch": "master",
+    "path": "datasets/atomic/windows/defense_evasion/host/covenant_installutil.zip",
+    "kind": "atomic_scenario"
+  },
+  {
+    "repo": "OTRF/Security-Datasets",
+    "branch": "master",
+    "path": "datasets/atomic/windows/defense_evasion/host/covenant_lolbin_wuauclt_createremotethread.zip",
+    "kind": "atomic_scenario"
+  },
+  {
+    "repo": "OTRF/Security-Datasets",
+    "branch": "master",
+    "path": "datasets/atomic/windows/defense_evasion/host/empire_launcher_sct_regsvr32.zip",
+    "kind": "atomic_scenario"
+  },
+  {
+    "repo": "OTRF/Security-Datasets",
+    "branch": "master",
+    "path": "datasets/atomic/windows/defense_evasion/host/empire_wmic_add_user_backdoor.zip",
+    "kind": "atomic_scenario"
+  },
+  {
+    "repo": "OTRF/Security-Datasets",
+    "branch": "master",
+    "path": "datasets/atomic/windows/defense_evasion/host/psh_mshta_html_application_execution.zip",
+    "kind": "atomic_scenario"
+  },
+  {
+    "repo": "OTRF/Security-Datasets",
+    "branch": "master",
+    "path": "datasets/atomic/windows/defense_evasion/host/wmic_remote_xsl_jscript.zip",
+    "kind": "atomic_scenario"
+  },
+  {
+    "repo": "OTRF/Security-Datasets",
+    "branch": "master",
+    "path": "datasets/atomic/windows/lateral_movement/host/empire_msbuild_dcerpc_wmi_smb.zip",
+    "kind": "atomic_scenario"
+  },
+  {
+    "repo": "OTRF/Security-Datasets",
+    "branch": "master",
+    "path": "datasets/atomic/windows/lateral_movement/host/empire_wmic_add_user_backdoor.zip",
+    "kind": "atomic_scenario"
+  },
+  {
+    "repo": "OTRF/detection-hackathon-apt29",
+    "branch": "master",
+    "path": "datasets/day1/apt29_evals_day1_manual.zip",
+    "kind": "compound_scenario"
+  },
+  {
+    "repo": "OTRF/detection-hackathon-apt29",
+    "branch": "master",
+    "path": "datasets/day2/apt29_evals_day2_manual.zip",
+    "kind": "compound_scenario"
+  },
+  {
+    "repo": "Yamato-Security/hayabusa-sample-evtx",
+    "branch": "main",
+    "path": "EVTX-to-MITRE-Attack/TA0005-Defense Evasion/T1562.001-Impair Defenses-Disable or Modify tool/ID1-SYSMON driver unload (FilterManager).evtx",
+    "kind": "evtx_detection_fixture"
+  },
+  {
+    "repo": "Yamato-Security/hayabusa-sample-evtx",
+    "branch": "main",
+    "path": "EVTX-to-MITRE-Attack/TA0006-Credential Access/T1003-Credential dumping/ID1-LSASS dump with LSASSY (SYSMON).evtx",
+    "kind": "evtx_detection_fixture"
+  },
+  {
+    "repo": "Yamato-Security/hayabusa-sample-evtx",
+    "branch": "main",
+    "path": "EVTX-to-MITRE-Attack/TA0007-Discovery/T1087-Account discovery/ID1-SPN discovery (SYSMON process).evtx",
+    "kind": "evtx_detection_fixture"
+  },
+  {
+    "repo": "Yamato-Security/hayabusa-sample-evtx",
+    "branch": "main",
+    "path": "YamatoSecurity/DefenseEvasion/T1027.004_ObfuscatedFilesOrInformationCompileAfterDelivery_Sysmon.evtx",
+    "kind": "evtx_detection_fixture"
+  },
+  {
+    "repo": "Yamato-Security/hayabusa-sample-evtx",
+    "branch": "main",
+    "path": "YamatoSecurity/DefenseEvasion/T1218.004_SignedBinaryProxyExecutionInstallUtil_Sysmon.evtx",
+    "kind": "evtx_detection_fixture"
+  },
+  {
+    "repo": "Yamato-Security/hayabusa-sample-evtx",
+    "branch": "main",
+    "path": "YamatoSecurity/LateralMovement/T1210_Zerologon_Sysmon.evtx",
+    "kind": "evtx_detection_fixture"
+  },
+  {
+    "repo": "Yamato-Security/hayabusa-sample-evtx",
+    "branch": "main",
+    "path": "YamatoSecurity/Sysmon/Sysmon-27-BlockExeWrite_AbusingCertutil.evtx",
+    "kind": "evtx_detection_fixture"
+  },
+  {
+    "repo": "Yamato-Security/hayabusa-sample-evtx",
+    "branch": "main",
+    "path": "YamatoSecurity/Sysmon/Sysmon-27-BlockExeWrite_AbusingSvchost.evtx",
+    "kind": "evtx_detection_fixture"
+  },
+  {
+    "repo": "splunk/attack_data",
+    "branch": "master",
+    "path": "datasets/attack_techniques/T1218.005/atomic_red_team/mshta_tasks_windows-sysmon.log",
+    "kind": "atomic_scenario"
+  },
+  {
+    "repo": "splunk/attack_data",
+    "branch": "master",
+    "path": "datasets/attack_techniques/T1649/atomic_red_team/backupdb_certutil_windows-sysmon.log",
+    "kind": "atomic_scenario"
+  },
+  {
+    "repo": "splunk/attack_data",
+    "branch": "master",
+    "path": "datasets/suspicious_behaviour/certutil_exe_certificate_extraction/windows-sysmon.log",
+    "kind": "atomic_scenario"
+  }
+]
