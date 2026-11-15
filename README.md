@@ -26,25 +26,34 @@ Implemented strictly based on the authoritative research by **Utz Nisslmueller (
 The detection engine processes incoming process telemetry through a multi-stage hybrid pipeline:
 
 ```mermaid
-flowchart LR
-    A["Raw Sysmon Telemetry (Event 1 / 4688)"] --> B["1. Data Ingestion & Host-Scoped Pairing"]
-    B --> C["2. Corpus Data Enrichment (xCyclopedia / LOTS / FileSec)"]
-    C --> D["3. 44-Dim Feature Extraction (Child F1..F18, Parent F1..F18, Context F19..F26)"]
-    D --> E["4. Microsoft Signature Filter (Authenticode Verification)"]
-    E --> F["5. StandardScaler + Isolation Forest Anomaly Estimator"]
-    
-    F --> G{"Decision Logic (Anomaly Threshold = 0.0)"}
-    G -->|"Score > 0 (Prediction = -1)"| H["ANOMALOUS (LOLBin)"]
-    G -->|"Score <= 0 (Prediction = +1)"| I["BENIGN (Legitimate Activity)"]
+flowchart TD
+    subgraph Tier1["TIER 1: TELEMETRY INGESTION & FEATURE ENGINEERING"]
+        direction LR
+        A["Raw Sysmon Telemetry<br/>(Event 1 / 4688)"] --> B["1. Data Ingestion &<br/>Host-Scoped Pairing"]
+        B --> C["2. Corpus Data Enrichment<br/>(xCyclopedia / LOTS / FileSec)"]
+        C --> D["3. 44-Dim Feature Extraction<br/>(Child F1..F18, Parent F1..F18, Context F19..F26)"]
+    end
+
+    subgraph Tier2["TIER 2: ANOMALY DETECTION & DECISION LOGIC"]
+        direction LR
+        E["4. Microsoft Signature Filter<br/>(Authenticode Verification)"] --> F["5. StandardScaler +<br/>Isolation Forest Estimator"]
+        F --> G{"Decision Logic<br/>(Anomaly Threshold = 0.0)"}
+        G -->|"Score > 0<br/>(Prediction = -1)"| H["ANOMALOUS<br/>(LOLBin Attack)"]
+        G -->|"Score <= 0<br/>(Prediction = +1)"| I["BENIGN<br/>(Legitimate Activity)"]
+    end
+
+    D -->|"Feature Matrix (44-Dim)"| E
 
     %% Semantic Styling
     classDef bad fill:#3b181e,stroke:#f85149,stroke-width:1.5px,color:#ff7b72;
     classDef good fill:#142d1f,stroke:#2ea043,stroke-width:1.5px,color:#56d364;
     classDef neutral fill:#21262d,stroke:#8b949e,stroke-width:1px,color:#c9d1d9;
+    classDef tier fill:#161b22,stroke:#30363d,stroke-width:1.5px,color:#8b949e;
 
     class H bad;
     class I good;
-    class E neutral;
+    class A,B,C,D,E,F neutral;
+    class Tier1,Tier2 tier;
 ```
 
 ### Execution Steps:
@@ -165,6 +174,7 @@ LotL-Detection/
 │
 ├── docs/                               # Tài liệu kỹ thuật và nghiên cứu học thuật
 │   ├── features.md                     # Đặc tả chi tiết 44 đặc trưng trích xuất theo nghiên cứu
+│   ├── system_workflow_explained.md    # Tài liệu giải thích chi tiết luồng hoạt động của hệ thống
 │   └── references/                     # Luận văn gốc của Utz Nisslmüller (TU Delft, 2022)
 │
 ├── models/                             # Thư mục lưu trữ mô hình đã huấn luyện
