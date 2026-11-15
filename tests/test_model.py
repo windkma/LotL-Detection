@@ -83,34 +83,34 @@ def test_complete_cli_pipeline(tmp_path, history, references):
     # Model smoke tests may use fixtures in isolated temp storage; production train may not.
     training = [replace(pair, parent=replace(pair.parent, command_line="pytest_training_parent.exe")) for pair in history]
     LOLBinDetector(references).fit(training).save(model)
-    for command, filename in [("predict", "test.csv"), ("evaluate", "test.jsonl")]:
+    for command, filename in [("predict", "test_botsv2.csv"), ("evaluate", "test_botsv2.jsonl")]:
         result = subprocess.run([sys.executable, str(root / "main.py"), command,
-                                 "--input", str(root / "data" / "processed" / filename),
+                                 "--input", str(root / "data" / "processed" / "test" / filename),
                                  "--model", str(model), "--output", str(tmp_path / command),
                                  "--processed-output", str(tmp_path / "processed")],
                                 capture_output=True, text=True, encoding="utf-8", timeout=120)
         assert result.returncode == 0, result.stderr
         report = json.loads(result.stdout)
-        assert report["coverage"]["excluded_signature_pairs"] == 1
+        assert report["coverage"]["excluded_signature_pairs"] == 0
         assert report["label_kind"] == "synthetic_fixture"
         if command == "evaluate":
             assert "| Precision | Recall | F1 |" in result.stderr
     metrics = json.loads((tmp_path / "evaluate" / "report.json").read_text())["metrics"]
-    assert metrics["evaluated_samples"] == 24 and metrics["excluded_samples"] == 2
+    assert metrics["evaluated_samples"] == 24 and metrics["excluded_samples"] == 0
     predictions = pd.read_csv(tmp_path / "evaluate" / "predictions.csv")
     features = pd.read_csv(tmp_path / "evaluate" / "features.csv")
-    assert len(predictions) == 26 and features.shape == (25, 45)
-    assert pd.read_csv(tmp_path / "processed" / "predict_features.csv").shape == (25, 44)
+    assert len(predictions) == 24 and features.shape == (24, 45)
+    assert pd.read_csv(tmp_path / "processed" / "predict_features.csv").shape == (24, 44)
 
 
 def test_default_storage_layout():
     from main import parser, ROOT
     args = parser().parse_args(["train"])
-    assert args.input == [ROOT / "data/processed/train_baseline.csv.gz"]
-    assert parser().parse_args(["evaluate"]).input == [ROOT / "data/processed/test.csv"]
+    assert args.input == [ROOT / "data/processed/train/train_baseline.csv.gz"]
+    assert parser().parse_args(["evaluate"]).input == [ROOT / "data/processed/test/test_botsv2.csv"]
     assert parser().parse_args(["ingest"]).manifest == ROOT / "data/raw/manifest.json"
     assert args.model == ROOT / "models" / "detector.joblib"
-    assert args.processed_output == ROOT / "data" / "processed"
+    assert args.processed_output == ROOT / "data" / "processed" / "train"
     assert args.output == ROOT / "reports" / "train"
 
 
@@ -145,6 +145,46 @@ def test_evaluation_api_and_standalone_cli_agree(tmp_path, references, history, 
     assert json.loads(result.stdout)["metrics"] == api["metrics"]
     assert api["metrics"]["evaluated_samples"] == len(unseen)
     assert (tmp_path / "api/evaluation.md").exists()
+
+
+def test_test_directory_rejects_training_commands_on_another_host(tmp_path, monkeypatch, references, history):
+    import csv
+    import gzip
+    import src.evaluate as evaluation
+    from src.pipeline.pair_schema import pair_row
+    model = LOLBinDetector(references).fit(history)
+    model.training_report["baseline_validation"] = {"eligible_training_pairs": len(history), "synthetic_excluded": True}
+    model_path = tmp_path / "model.joblib"
+    model.save(model_path)
+    train_dir = tmp_path / "data/processed/train"
+    test_dir = tmp_path / "data/processed/test"
+    train_dir.mkdir(parents=True); test_dir.mkdir(parents=True)
+    row = pair_row(history[0])
+    with gzip.open(train_dir / "train_baseline.csv.gz", "wt", newline="", encoding="utf-8") as stream:
+        writer = csv.DictWriter(stream, fieldnames=list(row)); writer.writeheader(); writer.writerow(row)
+    incoming = replace(history[0], parent=replace(history[0].parent, computer="new-host"),
+                       child=replace(history[0].child, computer="new-host", process_guid="another-guid", label=1))
+    row = pair_row(incoming)
+    test_path = test_dir / "test_botsv1.csv"
+    with test_path.open("w", newline="", encoding="utf-8") as stream:
+        writer = csv.DictWriter(stream, fieldnames=list(row)); writer.writeheader(); writer.writerow(row)
+    model.assert_disjoint([incoming])
+    monkeypatch.setattr(evaluation, "ROOT", tmp_path)
+    with pytest.raises(ValueError, match="command pairs overlap"):
+        evaluation.evaluate_model(test_path, model_path, tmp_path / "report", processed_output=tmp_path / "features")
+
+
+def test_synthetic_smoke_has_no_external_training_data_dependency(tmp_path, monkeypatch, test_dataset, references, history):
+    import src.evaluate as evaluation
+    model_path = tmp_path / "unit_model.joblib"
+    LOLBinDetector(references).fit(history).save(model_path)
+    fixture = tmp_path / "data/processed/test/test_botsv2.csv"
+    fixture.parent.mkdir(parents=True)
+    fixture.write_bytes(test_dataset.read_bytes())
+    monkeypatch.setattr(evaluation, "ROOT", tmp_path)
+    report = evaluation.evaluate_model(fixture, model_path, tmp_path / "report", processed_output=tmp_path / "features")
+    assert report["metrics"]["evaluated_samples"] == 24
+    assert report["label_kind"] == "synthetic_fixture" and not report["training_command_disjoint_checked"]
 
 
 @pytest.mark.parametrize("command", ["train", "evaluate"])

@@ -100,11 +100,11 @@ def markdown_metrics(reports: dict[str, dict]) -> str:
 def run(args: argparse.Namespace) -> dict[str, Any]:
     if args.command == "evaluate" and args.benchmark:
         from argparse import Namespace
-        from src.pipeline.benchmark_builder import BENCHMARKS, validate_benchmark
+        from src.pipeline.benchmark_builder import BENCHMARKS, TEST_FILENAMES, validate_benchmark
         results = {}
         names = list(BENCHMARKS) if args.benchmark == "all" else [args.benchmark]
         for name in names:
-            path = ROOT / "data/processed/benchmarks" / f"test_{name}.csv"
+            path = ROOT / "data/processed/test" / TEST_FILENAMES[name]
             if not path.exists():
                 results[name] = {"error": "Missing authentic manually annotated benchmark"}
                 continue
@@ -125,14 +125,26 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     pairs = loader.load(args.input)
     if not pairs:
         raise ValueError(f"No valid parent-child pairs. Ingestion statistics: {loader.stats}")
+    synthetic_input = any(p.child.computer.startswith(("synthetic", "fixture", "mock")) or
+                          str(p.child.metadata.get("issynthetic", "")).lower() in {"true", "1", "yes"} for p in pairs)
     args.output.mkdir(parents=True, exist_ok=True)
     detector = LOLBinDetector.load(args.model)
+    command_disjoint_checked = False
     if args.command == "evaluate":
-        benchmark_root = (ROOT / "data/processed/benchmarks").resolve()
+        benchmark_root = (ROOT / "data/processed/test").resolve()
         if any(path.resolve().is_relative_to(benchmark_root) for path in args.input):
             validation = detector.training_report.get("baseline_validation", {})
-            if validation.get("eligible_training_pairs", 0) < 2 or not validation.get("synthetic_excluded"):
+            production_model = validation.get("eligible_training_pairs", 0) >= 2 and validation.get("synthetic_excluded", False)
+            if not synthetic_input and not production_model:
                 raise ValueError("Benchmark evaluation requires a model trained on eligible real data")
+            if production_model:
+                from .pipeline.benchmark_builder import decode_pair, rows
+                from .pipeline.pair_schema import command_key
+                training_input = ROOT / "data/processed/train/train_baseline.csv.gz"
+                training_commands = {command_key(decode_pair(row, str(training_input))) for row in rows(training_input)}
+                if any(command_key(pair) in training_commands for pair in pairs):
+                    raise ValueError("Evaluation command pairs overlap train/train_baseline.csv.gz")
+                command_disjoint_checked = True
         detector.assert_disjoint(pairs)
     results, features, coverage = detector.predict(pairs)
     args.processed_output.mkdir(parents=True, exist_ok=True)
@@ -140,12 +152,12 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     write_json(args.processed_output / f"{args.command}_metadata.json",
                {"pair_indexes": features.index.tolist(), "model_path": str(args.model.resolve())})
     report = {"coverage": coverage, "ingestion": loader.stats, "algorithm": detector.model.algorithm,
-              "anomaly_score_direction": "higher is more anomalous; decision boundary = 0"}
+              "anomaly_score_direction": "higher is more anomalous; decision boundary = 0",
+              "training_command_disjoint_checked": command_disjoint_checked}
     if any(p.child.metadata.get("reviewer") == "Automated_Heuristic_Reviewer" for p in pairs):
         report["label_kind"] = "heuristic_weak_labels"
         report["independent_ground_truth"] = False
-    if any(p.child.computer.startswith(("synthetic", "fixture", "mock")) or
-           str(p.child.metadata.get("issynthetic", "")).lower() in {"true", "1", "yes"} for p in pairs):
+    if synthetic_input:
         report["label_kind"] = "synthetic_fixture"
         report["independent_ground_truth"] = False
     if args.command == "evaluate":
@@ -169,8 +181,8 @@ def evaluate_model(input_path: Path, model_path: Path, output_dir: Path | None =
     Synthetic smoke fixtures can be evaluated but are not real-world benchmarks.
     """
     return run(argparse.Namespace(command="evaluate", benchmark=None, input=[Path(input_path)],
-        model=Path(model_path), output=Path(output_dir) if output_dir is not None else ROOT / "artifacts/evaluation",
-        processed_output=Path(processed_output) if processed_output is not None else ROOT / "data/processed",
+        model=Path(model_path), output=Path(output_dir) if output_dir is not None else ROOT / "reports/evaluate",
+        processed_output=Path(processed_output) if processed_output is not None else ROOT / "data/processed/test",
         skip_invalid=skip_invalid, assume_event_id1=assume_event_id1))
 
 

@@ -146,6 +146,6 @@ def ingest_manifest(manifest_path: Path, project: Path, *, chunksize: int = 1000
     """Build the final eligible training CSV directly from raw telemetry."""
     from .baseline_builder import build_baseline
     from ..enricher import ReferenceDatabase
-    return build_baseline(manifest_path, output or project / "data/processed/train_baseline.csv.gz",
-                          ReferenceDatabase(project / "data/external"), project / "data/processed/benchmarks",
+    return build_baseline(manifest_path, output or project / "data/processed/train/train_baseline.csv.gz",
+                          ReferenceDatabase(project / "data/external"), project / "data/processed/test",
                           project=project, chunksize=chunksize)

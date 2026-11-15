@@ -14,6 +14,8 @@ from .ingestion import iter_pair_rows
 
 
 BENCHMARKS = {"botsv1": (16, 84), "botsv2": (8, 16), "botsv3": (25, 50), "splunk_attack_data": (100, 75), "mitre_eval": (100, 200)}
+TEST_FILENAMES = {"botsv1": "test_botsv1.csv", "botsv2": "test_botsv2.csv", "botsv3": "test_botsv3.csv",
+                  "splunk_attack_data": "test_splunk_attack.csv", "mitre_eval": "test_mitre.csv"}
 ALLOWED_SOURCES = {"botsv1": {"splunk/botsv1"}, "botsv2": {"splunk/botsv2"}, "botsv3": {"splunk/botsv3"},
                    "splunk_attack_data": {"splunk/attack_data"}, "mitre_eval": {"OTRF/detection-hackathon-apt29", "mitre/attack-evaluations", "ReaQta/MITRE"}}
 
@@ -30,7 +32,7 @@ def decode_pair(row: dict, source: str) -> ProcessPair:
     return ProcessPair(DataLoader._process(fields, source, "Parent"), DataLoader._process(fields, source))
 
 
-def build_benchmarks(manifest: Path, annotations: Path, output: Path, references: ReferenceDatabase, *, project: Path | None = None, chunksize: int = 100000) -> dict:
+def build_benchmarks(manifest: Path, annotations: Path, output: Path, references: ReferenceDatabase, *, project: Path | None = None, chunksize: int = 100000, test_output: Path | None = None) -> dict:
     """Require PairId/Benchmark/Label/AnnotationSource/Reviewer for each label.
 
     Manual judgments and explicit heuristic labels are tracked separately.
@@ -107,21 +109,19 @@ def build_benchmarks(manifest: Path, annotations: Path, output: Path, references
     if not diagnostics["ready"]:
         summary = {key: diagnostics[key] for key in ("sets", "quota_deficits", "training_overlap_annotations")}
         raise ValueError("Benchmark evidence/quotas incomplete; see " + str(output / "build_report.json") + ": " + json.dumps(summary))
-    if automatic:
-        output = output / "heuristic"
-    output.mkdir(parents=True, exist_ok=True)
-    if any((output / f"test_{name}.csv").exists() for name in BENCHMARKS):
+    dataset_output = (test_output or output) / "heuristic" if automatic else (test_output or output)
+    dataset_output.mkdir(parents=True, exist_ok=True)
+    if any((dataset_output / TEST_FILENAMES[name]).exists() for name in BENCHMARKS):
         raise FileExistsError("Benchmark outputs already exist; version them before rebuilding")
     for name, records in selected.items():
-        target = output / f"test_{name}.csv"
+        target = dataset_output / TEST_FILENAMES[name]
         with target.with_suffix(".part").open("w", encoding="utf-8", newline="") as stream:
             writer = csv.DictWriter(stream, fieldnames=[*PAIR_FIELDS, "AnnotationSource", "Reviewer"])
             writer.writeheader()
             writer.writerows(records)
     for name in BENCHMARKS:
-        target = output / f"test_{name}.csv"
+        target = dataset_output / TEST_FILENAMES[name]
         target.with_suffix(".part").replace(target)
-    (output / "build_report.json").write_text(json.dumps(diagnostics, indent=2), encoding="utf-8")
     return diagnostics
 
 

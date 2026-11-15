@@ -19,13 +19,15 @@ def main() -> int:
     cli.add_argument("--references", type=Path, default=ROOT / "data/external")
     cli.add_argument("--output", type=Path, default=ROOT / "data/processed/benchmarks/annotations.csv")
     cli.add_argument("--allow-source-fallback", action="store_true", help="Allocate explicit proxy rows; never changes their actual source")
-    cli.add_argument("--training-input", type=Path, default=ROOT / "data/processed/train_baseline.csv.gz", help="Audit overlap against the real training pairs")
+    cli.add_argument("--training-input", type=Path, default=ROOT / "data/processed/train/train_baseline.csv.gz", help="Audit overlap against the real training pairs")
     cli.add_argument("--overwrite", action="store_true", help="Replace only previous automatically generated annotations")
+    cli.add_argument("--exclude-training", action="store_true", help="Reject training command pairs before classification and quota selection")
+    cli.add_argument("--test-output", type=Path, help="Export each complete disjoint weak-label set; requires --exclude-training")
     args = cli.parse_args()
     try:
-        report = generate_annotations(args.manifest, args.output, ReferenceDatabase(args.references), allow_source_fallback=args.allow_source_fallback, training_path=args.training_input, overwrite=args.overwrite, project=ROOT, chunksize=args.chunksize)
+        report = generate_annotations(args.manifest, args.output, ReferenceDatabase(args.references), allow_source_fallback=args.allow_source_fallback, training_path=args.training_input, overwrite=args.overwrite, project=ROOT, chunksize=args.chunksize, exclude_training=args.exclude_training, test_output=args.test_output)
         print(json.dumps({k: v for k, v in report.items() if k != "allocations"}, indent=2))
-        return 0 if report["quotas_complete"] and report["holdout_verified"] else 2
+        return 0 if report["quotas_complete"] and report["holdout_verified"] and (args.test_output is None or report["test_exports_complete"]) else 2
     except (ValueError, OSError) as exc:
         print(str(exc), file=sys.stderr)
         return 1

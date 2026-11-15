@@ -1,13 +1,13 @@
 # Data layout
 
-- external/: static catalogs and exact-hash signature evidence.
-- raw/: immutable source logs; manifests retain source URLs, commits and checksums.
-- processed/: final train_baseline.csv.gz, train_features.csv, aligned metadata,
-  test.csv and test.jsonl; benchmark material lives under processed/benchmarks/.
+- external/: static threat intelligence, documentation and signature catalogs.
+- raw/: immutable source logs; manifests retain URLs, commits and SHA256.
+- processed/train/: real baseline, 44-column features and aligned metadata.
+- processed/test/: canonical evaluation sets and their inference features.
+- processed/benchmarks/: preserved protocol and historical annotation snapshot.
 
-Raw-to-processed ingestion uses disposable OS temporary SQLite joins. No event
-partitions or persistent database indexes are retained inside data/.
-The test CSV/JSONL remain synthetic smoke tests with the full evaluation schema;
-production training rejects their synthetic provenance. Model fitting uses the
-available real signature-eligible baseline, without a 60k/background-evidence gate.
-See the repository README for commands and current data limitations.
+Ingestion uses disposable OS temporary SQLite joins, with no persistent event
+layer. The current test_botsv2 CSV/JSONL contain 24 synthetic smoke-test pairs
+(only 12 unique command pairs), not original BOTSv2 telemetry or independent
+real ground truth. New real test mining rejects training command overlap.
+See the repository README and reports/data/ for actual readiness results.

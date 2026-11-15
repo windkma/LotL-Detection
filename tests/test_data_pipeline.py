@@ -167,7 +167,7 @@ def test_raw_to_final_dataset_preserves_inputs_and_filters_events(tmp_path):
     report = export_csv(manifest, tmp_path)
     assert report["sources"][0]["counts"]["records"] == 3
     assert report["sources"][0]["counts"]["process_events"] == 2
-    target = tmp_path / "data/processed/train_baseline.csv.gz"
+    target = tmp_path / "data/processed/train/train_baseline.csv.gz"
     with gzip.open(target, "rt", newline="", encoding="utf-8") as stream:
         exported = list(csv.DictReader(stream))
     assert len(exported) == 2 and exported[0]["EventID"] == "1"
@@ -202,7 +202,7 @@ def test_failed_ingestion_cleans_temporary_index_and_partial_output(tmp_path, mo
         ingest_manifest(manifest, tmp_path)
     assert raw.read_bytes() == original
     assert not list(scratch.iterdir())
-    assert not list((tmp_path / "data/processed").iterdir())
+    assert not list((tmp_path / "data/processed").rglob("*.*"))
 
 
 def test_xml_retains_system_metadata_in_raw_payload(tmp_path):

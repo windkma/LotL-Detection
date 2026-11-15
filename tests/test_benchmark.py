@@ -203,3 +203,84 @@ def test_auto_annotation_builder_requires_matching_sidecar(annotation_raw_manife
         build_benchmarks(manifest, output, tmp_path / "benchmarks", references)
 
 
+def test_heldout_mining_excludes_training_and_preserves_existing_tests(annotation_raw_manifest, tmp_path, references):
+    manifest, training = annotation_raw_manifest
+    test_dir = tmp_path / "test"
+    test_dir.mkdir()
+    existing = test_dir / "test_botsv2.csv"
+    existing.write_text("existing reviewed or synthetic test must survive")
+    report = generate_annotations(manifest, tmp_path / "heldout.csv", references,
+                                  training_path=training, exclude_training=True, test_output=test_dir)
+    assert report["counts"]["excluded_training"] == 3
+    assert report["heldout_eligible_command_pairs"] == 0 and report["annotations"] == 0
+    assert report["training_overlap_annotations"] == 0 and not report["quotas_complete"]
+    assert existing.read_text() == "existing reviewed or synthetic test must survive"
+    assert len(list(test_dir.glob("test_*.csv"))) == 1
+
+
+def test_heldout_mining_exports_complete_weak_set_only(annotation_raw_manifest, tmp_path, references):
+    import csv
+    import hashlib
+    from datetime import datetime, timezone
+    from src.data_loader import ProcessPair, ProcessRecord
+    from src.pipeline.pair_schema import pair_row, command_key
+    from src.pipeline.benchmark_builder import rows, decode_pair
+    manifest, training = annotation_raw_manifest
+    parent = ProcessRecord(image=r"C:\Windows\services.exe", command_line="services.exe",
+                           signer="Microsoft Windows", signature_valid=True)
+    records = []
+    for index in range(24):
+        binary, command = (("nslookup.exe", f"nslookup.exe -type=TXT fixture{index}.invalid") if index < 8 else
+                           ("svchost.exe", f"svchost.exe -k service-{index}"))
+        child = ProcessRecord(image="C:\\Windows\\System32\\" + binary, command_line=command,
+                              process_guid=f"pytest-heldout-{index}", computer="pytest-host",
+                              utc_time=datetime(2024, 2, 1, tzinfo=timezone.utc), signer="Microsoft Windows", signature_valid=True)
+        records.append(pair_row(ProcessPair(parent, child)))
+    raw = manifest.parent / "botsv2_unit_only.jsonl"
+    raw.write_text("".join(json.dumps(r) + "\n" for r in records))
+    content = json.loads(manifest.read_text())
+    content["items"].append({"repo": "splunk/botsv2", "path": str(raw), "sha256": hashlib.sha256(raw.read_bytes()).hexdigest()})
+    manifest.write_text(json.dumps(content))
+    output = tmp_path / "test"
+    report = generate_annotations(manifest, tmp_path / "heldout.csv", references,
+                                  training_path=training, exclude_training=True, test_output=output)
+    target = output / "test_botsv2.csv"
+    exported = list(rows(target))
+    assert len(exported) == 24 and sum(r["Label"] == "-1" for r in exported) == 8
+    assert all(r["LabelKind"] == "heuristic_weak_labels" and r["SourceRepo"] == "splunk/botsv2" for r in exported)
+    assert report["test_exports"]["botsv2"]["state"] == "exported_weak_labels"
+    assert not report["test_exports_complete"]
+    assert not report["quotas_complete"] and len(list(output.glob("test_*.csv"))) == 1
+    train_keys = {command_key(decode_pair(r, "training")) for r in rows(training)}
+    assert all(command_key(decode_pair(r, "heldout")) not in train_keys for r in exported)
+    assert not json.loads(target.with_suffix(".provenance.json").read_text())["independent_ground_truth"]
+    checksum = hashlib.sha256(target.read_bytes()).hexdigest()
+    second = generate_annotations(manifest, tmp_path / "rerun.csv", references,
+                                  training_path=training, exclude_training=True, test_output=output)
+    assert second["test_exports"]["botsv2"]["state"] == "existing_output_preserved"
+    assert not second["test_exports_complete"]
+    assert hashlib.sha256(target.read_bytes()).hexdigest() == checksum
+    with pytest.raises(ValueError, match="independent ground truth"):
+        validate_benchmark(target, "botsv2", references)
+
+
+@pytest.mark.parametrize("binary,command,rule", [
+    ("nslookup.exe", "nslookup.exe -type=TXT fixture.invalid", "nslookup_dns_txt_query"),
+    ("vssadmin.exe", "vssadmin.exe delete shadows /all /quiet", "vssadmin_shadow_deletion"),
+])
+def test_additional_suspicious_heuristics(binary, command, rule):
+    from src.data_loader import ProcessRecord, ProcessPair
+    child = ProcessRecord(image="C:\\Windows\\System32\\" + binary, command_line=command)
+    assert classify_pair(ProcessPair(ProcessRecord(command_line="services.exe"), child)) == (-1, rule)
+
+
+def test_normal_directory_listing_abstains_when_shell_operators_added():
+    from dataclasses import replace
+    from src.data_loader import ProcessRecord, ProcessPair
+    parent = ProcessRecord(command_line="explorer.exe")
+    child = ProcessRecord(image=r"C:\Windows\System32\cmd.exe", command_line="cmd.exe /c dir",
+                          signer="Microsoft Windows", signature_valid=True)
+    assert classify_pair(ProcessPair(parent, child)) == (1, "OS_read_only_cmd_dir")
+    assert classify_pair(ProcessPair(parent, replace(child, command_line="cmd.exe /c dir>output.txt")))[0] is None
+
+

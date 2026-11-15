@@ -17,11 +17,11 @@ def write_json(path: Path, content: Any) -> None:
 def add_arguments(task: argparse.ArgumentParser, command: str) -> None:
     task.set_defaults(command=command, benchmark=None)
     task.add_argument("--input", nargs="+", required=command == "predict", type=Path,
-                      default=[ROOT / "data/processed/train_baseline.csv.gz"] if command == "train" else
-                              [ROOT / "data/processed/test.csv"] if command == "evaluate" else None)
+                      default=[ROOT / "data/processed/train/train_baseline.csv.gz"] if command == "train" else
+                              [ROOT / "data/processed/test/test_botsv2.csv"] if command == "evaluate" else None)
     task.add_argument("--model", type=Path, default=ROOT / "models/detector.joblib")
-    task.add_argument("--output", type=Path, default=ROOT / ("artifacts/evaluation" if command == "evaluate" else "reports/" + command))
-    task.add_argument("--processed-output", type=Path, default=ROOT / "data/processed")
+    task.add_argument("--output", type=Path, default=ROOT / ("reports/evaluate" if command == "evaluate" else "reports/" + command))
+    task.add_argument("--processed-output", type=Path, default=ROOT / "data/processed" / ("train" if command == "train" else "test"))
     task.add_argument("--assume-event-id1", action="store_true")
     task.add_argument("--skip-invalid", action="store_true")
     if command == "evaluate":

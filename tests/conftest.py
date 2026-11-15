@@ -13,7 +13,7 @@ from src.features import FeatureExtractor
 
 @pytest.fixture
 def test_dataset() -> Path:
-    return Path(__file__).resolve().parents[1] / "data/processed/test.csv"
+    return Path(__file__).resolve().parents[1] / "data/processed/test/test_botsv2.csv"
 
 
 @pytest.fixture

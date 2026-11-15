@@ -30,8 +30,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                                n_estimators=args.n_estimators, random_state=args.seed)
     enriched_baseline = references.enrich(pairs)
     require_production_training(enriched_baseline)
-    heldout_paths = list((ROOT / "data/processed/benchmarks").glob("test_*.csv"))
-    heldout_commands = {command_key(pair) for path in heldout_paths for pair in DataLoader(production=True).load(path)}
+    heldout_paths = list((ROOT / "data/processed/test").rglob("test_*.csv"))
+    heldout_commands = {command_key(pair) for path in heldout_paths for pair in DataLoader().load(path)}
     if any(command_key(pair) in heldout_commands for pair in enriched_baseline):
         raise ValueError("Training overlaps held-out benchmark command pairs")
     detector.fit(enriched_baseline)
@@ -68,7 +68,7 @@ def train_model(input_path: Path, model_output: Path, references_dir: Path,
     return run(argparse.Namespace(command="train", input=[Path(input_path)], model=Path(model_output),
         references=Path(references_dir), contamination=contamination, n_estimators=n_estimators,
         f7_mode=f7_mode, seed=seed, output=Path(output_dir) if output_dir is not None else ROOT / "reports/train",
-        processed_output=Path(processed_output) if processed_output is not None else ROOT / "data/processed",
+        processed_output=Path(processed_output) if processed_output is not None else ROOT / "data/processed/train",
         skip_invalid=skip_invalid, assume_event_id1=assume_event_id1, binary_dir=binary_dir))
 
 
